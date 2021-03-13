@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-# This tags and uploads an image to Docker Hub
 
 # Step 1:
 # This is your Docker ID/path
@@ -11,8 +10,8 @@ dockerpath=mkhordoo/house-prediction
 kubectl create deployment --image=$dockerpath house-prediction-app
 
 # Step 3:
-kubectl get po
+export POD_NAME=$(kubectl get pods --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}')
 
 # Step 4:
 # Forward the container port to a host
-
+kubectl port-forward $POD_NAME 8000:80
