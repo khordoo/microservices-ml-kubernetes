@@ -1,28 +1,28 @@
 [![CircleCI](https://circleci.com/gh/khordoo/microservices-ml-kubernetes.svg?style=svg)](https://circleci.com/gh/khordoo/microservices-ml-kubernetes)
 
 
-## Project Overview
+## Machine Learning at Scale using Kubernetese
 
-In this project are operationalizing a Machine Learning Microservice API. 
+The project's goal is to operationalize a machine learning microservice using kubernetes. we are using a pre-trained, `sklearn` model that has been trained to predict housing prices in Boston according to several features, such as average rooms in a home and data about highway access, teacher-to-pupil ratios, and so on. More infromation about about the data, which was initially taken from Kaggle, cab ne read on [the data source site](https://www.kaggle.com/c/boston-housing). This project exposes the the ML model using a Python flask endpoint.The end point serves out predictions (inference) about housing prices through API calls. 
 
-we are using a pre-trained, `sklearn` model that has been trained to predict housing prices in Boston according to several features, such as average rooms in a home and data about highway access, teacher-to-pupil ratios, and so on. More infromation about about the data, which was initially taken from Kaggle, cab ne read on [the data source site](https://www.kaggle.com/c/boston-housing). This project exposes the the ML model using a Python flask endpoint.The end point serves out predictions (inference) about housing prices through API calls. 
+### Install
 
-### Project Tasks
+- Docker
+- Virtualbox
 
-The objective is to operationalize this working, machine learning microservice using [kubernetes](https://kubernetes.io/), which is an open-source system for automating the management of containerized applications. 
+For Ubuntu:
 
-In this project will perfrom the following:
-* Test the code using linting
-* Used a Dockerfile to containerize this application
-* Deploy the containerized application using Docker and make a prediction
-* Improve the log statements in the source code for this application
-* Configure Kubernetes and create a Kubernetes cluster
-* Deploy a container using Kubernetes and make a prediction
-* Upload a complete Github repo with CircleCI to indicate that your code has been tested
+Binary download and install
+```sh
+ curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+ sudo install minikube-linux-amd64 /usr/local/bin/miniku
+``` 
 
+Start the cluster
 
-
-
+```sh
+ minikube start
+```
 
 ## Setup the Environment
 
@@ -31,24 +31,38 @@ In this project will perfrom the following:
 Then perform the following: 
 1
 
-### Running `app.py`
-
-1. Standalone:  `python app.py`
-2. Run in Docker:  `./run_docker.sh`
-3. Run in Kubernetes:  `./run_kubernetes.sh`
-
-### Kubernetes Steps
-
-* Setup and Configure Docker locally
-* Setup and Configure Kubernetes locally
-* Create Flask app in Container
-* Run via kubectl
-
-## Making predictions
+### Running the application
 
 The project was deployed using Kubernetes and is serving the predictions on port 8000.
 We can test making predictions by runing the following:
 
+- 1.  Start a local cluster, using the following:
+
+```sh
+$ minikube start
+```
+- 2.  deploy the application in kubernetes cluster:
+```sh
+./run_kubernetes.sh
+```
+- 3. Wait untile the pos is up and running. Open a separate terminal windows and run the following for making a prediction
+
 ```sh
 $ ./make_prediction.sh
 ```
+- 4. Clean up: delete the cluster
+```sh 
+$minikube delete
+```
+
+### Sample Response
+Here is a sample response from the app
+
+```json
+{
+  "predicitons": [
+    20.4566789
+  ]
+}
+```
+
